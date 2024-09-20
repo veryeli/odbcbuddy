@@ -1,0 +1,14 @@
+ODB_SERVER = 'your server name here'
+ODB_USER = 'your username' 
+ODB_PASSWORD = 'your password'
+ODB_DATABASE = 'your database'
+ODB_PORT = 1433
+ODB_DRIVER = 'ODBC Driver 17 for SQL Server'
+ODB_CONN_STR = f"""
+    DRIVER={ODB_DRIVER};
+    SERVER={ODB_SERVER};
+    DATABASE={ODB_DATABASE};
+    UID={ODB_USER};
+    PWD={ODB_PASSWORD};
+    TrustServerCertificate=Yes;"""
+URL = 'url you are serving from'
