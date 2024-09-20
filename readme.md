@@ -8,3 +8,4 @@ configure via nginx so you can only access from development computer
 
 runs via sudo systemctl restart gunicorn-flask
 
+then you can see logs with `sudo journalctl -u gunicorn-flask | tail -n 200`
