@@ -1,3 +1,6 @@
 __pycache__/
 consts_real.py
+consts.py
 .env/
+*.swp
+

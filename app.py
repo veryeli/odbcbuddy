@@ -38,6 +38,10 @@ def execute_query():
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)})
 
+    finally:
+        cursor.close()
+        conn.close()
+
 @app.route('/')
 def index():
     return jsonify({"message": "Hello, World!"})
