@@ -1,0 +1,10 @@
+services:
+  odbcbuddy:
+    build: .
+    image: odbcbuddy
+    container_name: odbcbuddy
+    ports:
+      - "1337:1337"  # Maps host port 1337 to container port 1337
+    environment:
+      - ENVIRONMENT=production
+    restart: always
