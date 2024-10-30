@@ -18,7 +18,9 @@ def test_connection():
         result = cursor.fetchone()
         return jsonify({'status': 'success', 'result': result[0]})
     except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)})
+        return jsonify({'status': 'error', 
+            'message': str(e),
+            'conn_str': ODB_CONN_STR})
 
 @app.route('/query', methods=['POST'])
 def execute_query():

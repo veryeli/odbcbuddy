@@ -1,10 +1,16 @@
+version: '3.3'
+
 services:
   odbcbuddy:
-    build: .
-    image: odbcbuddy
+    build:
+      context: .
     container_name: odbcbuddy
     ports:
-      - "1337:1337"  # Maps host port 1337 to container port 1337
+      - "54321:54321"
     environment:
-      - ENVIRONMENT=production
-    restart: always
+      - ENVIRONMENT=development
+    volumes:
+      - .:/app  # Maps the current directory to /app in the container
+      - /app/venv  # Avoids overwriting the virtual environment inside the container
+    command: ["gunicorn", "-b", "0.0.0.0:54321", "app:app", "--reload"]
+
