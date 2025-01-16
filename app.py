@@ -56,7 +56,7 @@ def execute_query():
 
 @app.route('/')
 def index():
-    return jsonify({"message": "Hello, World!"})
+    return jsonify({"message": "Hello, Friend!"})
 
 @app.route('/flask')
 def flask_route():
