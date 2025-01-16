@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import pyodbc
+from datetime import datetime
 from consts import ODB_CONN_STR
 
 app = Flask(__name__)
@@ -7,6 +8,16 @@ app = Flask(__name__)
 def get_db_connection():
     connection = pyodbc.connect(ODB_CONN_STR)
     return connection
+
+# Custom JSON encoder to format datetime objects
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        return super().default(obj)
+
+# Set the custom JSON encoder for the Flask app
+app.json_encoder = CustomJSONEncoder
 
 # Define a route to test the connection
 @app.route('/test', methods=['GET'])
@@ -18,7 +29,7 @@ def test_connection():
         result = cursor.fetchone()
         return jsonify({'status': 'success', 'result': result[0]})
     except Exception as e:
-        return jsonify({'status': 'error', 
+        return jsonify({'status': 'error',
             'message': str(e),
             'conn_str': ODB_CONN_STR})
 
@@ -28,7 +39,7 @@ def execute_query():
     query = data.get('query')
     if not query:
         return jsonify({'status': 'error', 'message': 'No query provided'}), 400
-    
+
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -39,7 +50,6 @@ def execute_query():
         return jsonify({'status': 'success', 'results': results})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)})
-
     finally:
         cursor.close()
         conn.close()
