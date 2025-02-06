@@ -1,7 +1,11 @@
+"""Runs main app"""
+import json
+
 from flask import Flask, jsonify, request
 import pyodbc
 from datetime import datetime
 from consts import ODB_CONN_STR
+
 
 app = Flask(__name__)
 
