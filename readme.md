@@ -2,7 +2,6 @@
 
 utility i set up once i configured odbc on one system because it's hard to do on each new computer
 
-
 docker-compose up --build -d
 
 next fix the end of the openssl config in /etc/ssl/openssl.cnf so it's like on the server that works already tls
