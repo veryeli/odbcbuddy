@@ -1,20 +1,17 @@
 """Runs main app"""
 import json
+from datetime import datetime, time
+
 
 from flask import Flask, jsonify, request
+from flask.json.provider import DefaultJSONProvider
 import pyodbc
-from datetime import datetime, time
 from consts import ODB_CONN_STR
 
 
 app = Flask(__name__)
 
-def get_db_connection():
-    connection = pyodbc.connect(ODB_CONN_STR)
-    return connection
-
-# Custom JSON encoder to format datetime objects
-class CustomJSONEncoder(json.JSONEncoder):
+class CustomJSONProvider(DefaultJSONProvider):
     def default(self, obj):
         if isinstance(obj, datetime):
             return obj.strftime('%Y-%m-%d %H:%M:%S')
@@ -22,8 +19,11 @@ class CustomJSONEncoder(json.JSONEncoder):
             return obj.strftime('%H:%M:%S')
         return super().default(obj)
 
-# Set the custom JSON encoder for the Flask app
-app.json_encoder = CustomJSONEncoder
+app.json = CustomJSONProvider(app)
+
+def get_db_connection():
+    connection = pyodbc.connect(ODB_CONN_STR)
+    return connection
 
 # Define a route to test the connection
 @app.route('/test', methods=['GET'])
